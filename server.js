@@ -1,25 +1,17 @@
 const express = require("express");
-const cors = require("cors");
 const dotenv = require("dotenv");
-const { chats } = require("./data/data");
+const connectDB = require("./Config/db");
 
 const app = express();
 dotenv.config();
-app.use(cors());
 
-app.get("/", (req, res) => {
-  res.send("API is running...");
-});
-
-app.get("/api/chat", (req, res) => {
-  res.send(chats);
-});
-
-app.get("/api/chat/:id", (req, res) => {
-  const singleChat = chats.find((c) => c._id === req.params.id);
-  res.send(singleChat);
-});
+require("./Config/express")(app);
+require("./Routes")(app);
 
 const PORT = process.env.PORT || 5000;
+function listen() {
+  app.listen(PORT, console.log(`Server started on PORT ${PORT}`));
+}
 
-app.listen(PORT, console.log(`Server started on PORT ${PORT}`));
+// Connect to Database
+connectDB().then(listen);
