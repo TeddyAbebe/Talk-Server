@@ -1,12 +1,17 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const connectDB = require("./Config/db");
+const { notFound, errorHandler } = require("./Middlewares/errorMiddleware");
 
 const app = express();
 dotenv.config();
 
-require("./Config/express")(app);
+require("./Middlewares/express")(app);
 require("./Routes")(app);
+
+// Error Middlewares
+app.use(notFound);
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 function listen() {
