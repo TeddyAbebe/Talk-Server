@@ -1,5 +1,5 @@
 const asyncHandler = require("express-async-handler");
-const User = require("../../Models/userModel");
+const User = require("../../Models/User");
 const generateToken = require("../../Config/generateToken");
 
 const registerUser = asyncHandler(async (req, res) => {
@@ -63,6 +63,8 @@ const allUsers = asyncHandler(async (req, res) => {
       }
     : {};
 
-    const users = await User.findOne(keyword).find({_id:{}})
+  const users = await User.find(keyword).find({ _id: { $ne: req.user._id } });
+  console.log(users);
+  res.send(users);
 });
 module.exports = { registerUser, loginUser, allUsers };
