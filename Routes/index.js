@@ -1,5 +1,6 @@
 const userRoutes = require("./UserRoutes");
 const chatRoutes = require("./ChatRoutes");
+const messageRoutes = require("./MessageRoutes");
 
 module.exports = function (app) {
   // User Route
@@ -7,4 +8,7 @@ module.exports = function (app) {
 
   // Chats Route
   app.use("/api/chat", chatRoutes);
+
+  // Message Route
+  app.use("/api/message", messageRoutes);
 };
