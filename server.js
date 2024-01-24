@@ -10,16 +10,22 @@ const server = http.createServer(app);
 const io = socketIo(server, {
   pingTimeout: 60000,
   cors: {
-    origin: "https://ta-lk.netlify.app/",
+    // origin: "http://localhost:3000",
+    origin: "https://ta-lk.netlify.app",
   },
 });
 
 dotenv.config();
 
+app.get("/", (req, res) => {
+  res.send("API is Running Successfully");
+});
+
 require("./Middlewares/express")(app);
 require("./Routes")(app);
 
 // Socket configuration
+
 io.on("connection", (socket) => {
   socket.on("setup", (userData) => {
     socket.join(userData._id);
